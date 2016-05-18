@@ -14,8 +14,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,8 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 public class FloatingActionsMenu extends ViewGroup {
+    static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
+
     public static final int EXPAND_UP = 0;
     public static final int EXPAND_DOWN = 1;
     public static final int EXPAND_LEFT = 2;
@@ -33,7 +37,7 @@ public class FloatingActionsMenu extends ViewGroup {
     public static final int LABELS_ON_LEFT_SIDE = 0;
     public static final int LABELS_ON_RIGHT_SIDE = 1;
 
-    private static final int ANIMATION_DURATION = 300;
+    private static final int ANIMATION_DURATION = 200;
     private static final float COLLAPSED_PLUS_ROTATION = 0f;
     private static final float EXPANDED_PLUS_ROTATION = 90f + 45f;
     private static Interpolator sExpandInterpolator = new OvershootInterpolator();
@@ -631,5 +635,67 @@ public class FloatingActionsMenu extends ViewGroup {
                 }
             });
         }
+    }
+
+
+    public void show() {
+        show(false);
+    }
+
+    public void show(boolean isImmediately) {
+        if (isImmediately || getVisibility() == View.VISIBLE) {
+            setVisibility(View.VISIBLE);
+            setAlpha(1f);
+            setScaleY(1f);
+            setScaleX(1f);
+        } else {
+            mAddButton.animate().cancel();
+            mAddButton.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .alpha(1f)
+                    .setDuration(ANIMATION_DURATION)
+                    .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            mAddButton.setScaleX(0);
+                            mAddButton.setScaleY(0);
+                            mAddButton.setAlpha(0);
+                            mAddButton.setVisibility(VISIBLE);
+                            setVisibility(View.VISIBLE);
+                        }
+                    });
+        }
+    }
+
+    public void hide() {
+        if (getVisibility() == VISIBLE) {
+            mAddButton.animate().cancel();
+
+            mAddButton.animate()
+                    .scaleX(0f)
+                    .scaleY(0f)
+                    .alpha(0f)
+                    .setStartDelay(isExpanded() ? ANIMATION_DURATION : 0)
+                    .setDuration(ANIMATION_DURATION)
+                    .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mAddButton.setVisibility(GONE);
+                            setVisibility(View.GONE);
+                        }
+                    });
+
+            if (isExpanded()) {
+                collapse();
+            }
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
     }
 }

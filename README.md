@@ -3,7 +3,8 @@ FloatingActionButton
 Yet another library for drawing [Material Design promoted actions](http://www.google.com/design/spec/patterns/promoted-actions.html).
 
 just fork from  [futuresimple](https://github.com/futuresimple/android-floating-action-button) 
-[![Release](https://jitpack.io/v/User/Repo.svg?style=flat-square)](https://jitpack.io/private#ddqd/android-floating-action-button)
+
+[![Release](https://jitpack.io/v/jitpack/maven-simple.svg)](https://jitpack.io/#ddqd/android-floating-action-button)
 
 Features
 ========

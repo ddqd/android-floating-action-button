@@ -481,7 +481,6 @@ public class FloatingActionButton extends ImageButton {
                         }
                         @Override
                         public void onAnimationStart(Animator animation) {
-                            setVisibility(View.GONE);
                             if (animationListener != null) {
                                 animationListener.onAnimationStart();
                             }

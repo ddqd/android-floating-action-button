@@ -457,6 +457,10 @@ public class FloatingActionButton extends ImageButton {
         }
     }
 
+    public void hide() {
+        hide(null);
+    }
+
     public void hide(@Nullable final IButtonAnimationListener animationListener) {
         if (getVisibility() == VISIBLE) {
             animate().cancel();
@@ -473,6 +477,13 @@ public class FloatingActionButton extends ImageButton {
                             setVisibility(View.GONE);
                             if (animationListener != null) {
                                 animationListener.onAnimationEnd();
+                            }
+                        }
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            setVisibility(View.GONE);
+                            if (animationListener != null) {
+                                animationListener.onAnimationStart();
                             }
                         }
                     });

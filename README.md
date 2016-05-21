@@ -4,7 +4,7 @@ Yet another library for drawing [Material Design promoted actions](http://www.go
 
 just fork from  [futuresimple](https://github.com/futuresimple/android-floating-action-button) 
 
-[![Release](https://jitpack.io/v/jitpack/maven-simple.svg)](https://jitpack.io/#ddqd/android-floating-action-button)
+[![Release](https://jitpack.io/v/ddqd/android-floating-action-button.svg)](https://jitpack.io/#ddqd/android-floating-action-button)
 
 Features
 ========

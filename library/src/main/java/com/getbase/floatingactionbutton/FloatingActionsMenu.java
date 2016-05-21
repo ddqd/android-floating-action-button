@@ -14,6 +14,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
@@ -637,12 +638,15 @@ public class FloatingActionsMenu extends ViewGroup {
         }
     }
 
-
     public void show() {
-        show(false);
+        show(false, null);
     }
 
-    public void show(boolean isImmediately) {
+    public void show(@Nullable IButtonAnimationListener animationListener) {
+        show(false, animationListener);
+    }
+
+    public void show(boolean isImmediately, final IButtonAnimationListener animationListener) {
         if (isImmediately || getVisibility() == View.VISIBLE) {
             setVisibility(View.VISIBLE);
             setAlpha(1f);
@@ -664,12 +668,26 @@ public class FloatingActionsMenu extends ViewGroup {
                             mAddButton.setAlpha(0);
                             mAddButton.setVisibility(VISIBLE);
                             setVisibility(View.VISIBLE);
+                            if (animationListener != null) {
+                                animationListener.onAnimationStart();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            if (animationListener != null) {
+                                animationListener.onAnimationEnd();
+                            }
                         }
                     });
         }
     }
 
     public void hide() {
+        hide(null);
+    }
+
+    public void hide(@Nullable final IButtonAnimationListener animationListener) {
         if (getVisibility() == VISIBLE) {
             mAddButton.animate().cancel();
 
@@ -682,9 +700,19 @@ public class FloatingActionsMenu extends ViewGroup {
                     .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
+                        public void onAnimationStart(Animator animation) {
+                            if (animationListener != null) {
+                                animationListener.onAnimationStart();
+                            }
+                        }
+
+                        @Override
                         public void onAnimationEnd(Animator animation) {
                             mAddButton.setVisibility(GONE);
                             setVisibility(View.GONE);
+                            if (animationListener != null) {
+                                animationListener.onAnimationEnd();
+                            }
                         }
                     });
 

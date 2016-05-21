@@ -27,6 +27,7 @@ import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
@@ -412,10 +413,14 @@ public class FloatingActionButton extends ImageButton {
     }
 
     public void show() {
-        show(false);
+        show(false, null);
     }
 
-    public void show(boolean isImmediately) {
+    public void show(@Nullable IButtonAnimationListener animationListener) {
+        show(false, animationListener);
+    }
+
+    public void show(boolean isImmediately, @Nullable final IButtonAnimationListener animationListener) {
         if (isImmediately || getVisibility() == View.VISIBLE) {
             setVisibility(View.VISIBLE);
             setAlpha(1f);
@@ -437,12 +442,22 @@ public class FloatingActionButton extends ImageButton {
                             setScaleY(0);
                             setAlpha(0);
                             setVisibility(View.VISIBLE);
+                            if (animationListener != null) {
+                                animationListener.onAnimationStart();
+                            }
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            if (animationListener != null) {
+                                animationListener.onAnimationEnd();
+                            }
                         }
                     });
         }
     }
 
-    public void hide() {
+    public void hide(@Nullable final IButtonAnimationListener animationListener) {
         if (getVisibility() == VISIBLE) {
             animate().cancel();
 
@@ -456,6 +471,9 @@ public class FloatingActionButton extends ImageButton {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             setVisibility(View.GONE);
+                            if (animationListener != null) {
+                                animationListener.onAnimationEnd();
+                            }
                         }
                     });
         }

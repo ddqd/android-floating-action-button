@@ -1,6 +1,9 @@
-FloatingActionButton
+FloatingActionButton 
 ====================
 Yet another library for drawing [Material Design promoted actions](http://www.google.com/design/spec/patterns/promoted-actions.html).
+
+just fork from  [futuresimple](https://github.com/futuresimple/android-floating-action-button) 
+[![Release](https://jitpack.io/v/User/Repo.svg?style=flat-square)](https://jitpack.io/private#ddqd/android-floating-action-button)
 
 Features
 ========
@@ -23,14 +26,27 @@ Features
 
 Usage
 =====
-Just add the dependency to your `build.gradle`:
+
+**Step 1.** Add the JitPack repository to your build file
+
+Add it in your root `build.gradle` at the end of repositories:
+
+```groovy
+allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+
+**Step 2.** Add the dependency
 
 ```groovy
 dependencies {
-    compile 'com.getbase:floatingactionbutton:1.10.1'
+	compile 'com.github.ddqd:android-floating-action-button:1.10.2'
 }
 ```
-
 To see how the buttons are added to your xml layouts, check the sample project.
 
 Caveats

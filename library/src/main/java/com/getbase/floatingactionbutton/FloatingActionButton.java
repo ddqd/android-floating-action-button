@@ -38,7 +38,7 @@ import android.widget.TextView;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class FloatingActionButton extends ImageButton {
+public class FloatingActionButton extends ImageButton implements IButtonBehaviour{
 
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;
@@ -412,6 +412,7 @@ public class FloatingActionButton extends ImageButton {
         super.setVisibility(visibility);
     }
 
+    @Override
     public void show() {
         show(false, null);
     }
@@ -457,6 +458,7 @@ public class FloatingActionButton extends ImageButton {
         }
     }
 
+    @Override
     public void hide() {
         hide(null);
     }

@@ -27,7 +27,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
-public class FloatingActionsMenu extends ViewGroup {
+public class FloatingActionsMenu extends ViewGroup implements IButtonBehaviour {
     static final Interpolator FAST_OUT_SLOW_IN_INTERPOLATOR = new FastOutSlowInInterpolator();
 
     public static final int EXPAND_UP = 0;
@@ -638,6 +638,7 @@ public class FloatingActionsMenu extends ViewGroup {
         }
     }
 
+    @Override
     public void show() {
         show(false, null);
     }
@@ -683,6 +684,7 @@ public class FloatingActionsMenu extends ViewGroup {
         }
     }
 
+    @Override
     public void hide() {
         hide(null);
     }

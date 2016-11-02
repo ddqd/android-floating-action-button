@@ -45,7 +45,7 @@ allprojects {
 
 ```groovy
 dependencies {
-	compile 'com.github.ddqd:android-floating-action-button:1.10.2'
+	compile 'com.github.ddqd:android-floating-action-button:1.11.4'
 }
 ```
 To see how the buttons are added to your xml layouts, check the sample project.
